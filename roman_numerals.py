@@ -39,25 +39,11 @@ def shift(arr, num, fill_value=np.nan):
         result = arr
     return result
 
-class RevOrderedDict(OrderedDict):
-    ''' A reversible OrderedDict, ie (k, v) items are switched to (v, k).  '''
-
-    def __init__(self, *args, **kwargs):
-        super(RevOrderedDict, self).__init__(*args, **kwargs)
-
-    def reverse(self):
-        reverse_dict = OrderedDict(((w, k) for k, w in self.items()))
-        return reverse_dict
-
-    def __getattr__(self, attr):
-        if attr in ('reversed', 'rev', 'r'):
-            return self.reverse()
-
 class RomanNumeral():
     ''' Represent a roman number. '''
 
     ''' Digits used to parse from roman. '''
-    digits = RevOrderedDict((
+    digits = OrderedDict((
         ('0', 0),
         ('I', 1),
         ('V', 5),
@@ -69,20 +55,20 @@ class RomanNumeral():
         ))
 
     ''' Base of symbols used to convert to roman. '''
-    symbols = RevOrderedDict((
-        ('I', 1),
-        ('IV', 4),
-        ('V', 5),
-        ('IX', 9),
-        ('X', 10),
-        ('XL', 40),
-        ('L', 50),
-        ('XC', 90),
-        ('C', 100),
-        ('CD', 400),
-        ('D', 500),
-        ('CM', 900),
-        ('M', 1000),
+    symbols = OrderedDict((
+        (1, 'I'),
+        (4, 'IV'),
+        (5, 'V'),
+        (9, 'IX'),
+        (10, 'X'),
+        (40, 'XL'),
+        (50, 'L'),
+        (90, 'XC'),
+        (100, 'C'),
+        (400, 'CD'),
+        (500, 'D'),
+        (900, 'CM'),
+        (1000, 'M'),
         ))
 
     def __init__(self, num):
@@ -141,7 +127,7 @@ class RomanNumeral():
 
     def _int_to_roman(self, int_value):
         ''' Convert an arabic int to a roman string. '''
-        sorted_symbols = sorted(RomanNumeral.symbols.rev.items(), reverse=True)
+        sorted_symbols = sorted(RomanNumeral.symbols.items(), reverse=True)
         roman_string = ''
         r = int_value
         for base_int, base_roman in sorted_symbols:
