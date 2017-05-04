@@ -40,7 +40,6 @@ def shift(arr, num, fill_value=np.nan):
     return result
 
 class RomanNumeral():
-    ''' Represent a roman number. '''
 
     ''' Digits used to parse from roman. '''
     digits = OrderedDict((
@@ -72,7 +71,7 @@ class RomanNumeral():
         ))
 
     def __init__(self, num):
-        '''
+        ''' Represent a roman number.
         Parameters
         ==========
         num : int or str
@@ -85,6 +84,25 @@ class RomanNumeral():
             The roman representation of the number.
         int : int
             The arabic representation of the number.
+
+        Examples
+        ========
+
+        >>> rn = RomanNumeral('MDCXLII')
+        >>> rn, rn.roman, rn.int
+        (<RomanNumeral MDCXLII (1642)>, 'MDCXLII', 1642)
+        >>> rn = RomanNumeral(1954)
+        >>> rn, rn.roman, rn.int
+        (<RomanNumeral MCMLIV (1954)>, 'MCMLIV', 1954)
+
+        >>> def parse_ion(ion_name):
+        ...     atom, ionisation = ion_name.split(' ')
+        ...     ionisation = RomanNumeral(ionisation)
+        ...     return atom, ionisation.int
+        ... parse_ion('Fe XIV')
+        ...
+        ('Fe', 14)
+
         '''
 
         error_msg = "'{}' cannot be interperted as a roman numeral."
