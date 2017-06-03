@@ -27,7 +27,7 @@ license: >
 from collections import OrderedDict
 import numpy as np
 
-def shift(arr, num, fill_value=np.nan):
+def _shift(arr, num, fill_value=np.nan):
     result = np.empty_like(arr)
     if num > 0:
         result[:num] = fill_value
@@ -129,10 +129,10 @@ class RomanNumeral():
     def _roman_to_int(self, roman_string):
         ''' Convert a roman string to an arabic int. '''
         digits = np.array([RomanNumeral(d).int for d in roman_string])
-        next_digits = shift(digits, -1, fill_value=0)
+        next_digits = _shift(digits, -1, fill_value=0)
 
         followed_digits = digits < next_digits
-        following_digits = shift(followed_digits, 1, fill_value=False)
+        following_digits = _shift(followed_digits, 1, fill_value=False)
 
         # count digits that are not followed nor following once
         single_digits = (digits[~(followed_digits | following_digits)])
